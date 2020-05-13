@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TaobaoUnion</string>
+    <string name="text_home">Home</string>
+    <string name="text_sale">Sale</string>
+    <string name="text_red_pack">Red Pack</string>
+    <string name="text_search">Search</string>
+</resources>

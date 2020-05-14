@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <View
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/test_navigation_bar"
+        android:background="@color/gray"/>
+
+    <RadioGroup
+        android:id="@+id/test_navigation_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/test_home"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textColor="@drawable/navigation_bar_color"
+            android:drawableTop="@drawable/selector_navigation_home"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="@string/text_home"
+            android:textAlignment="center"/>
+
+        <RadioButton
+            android:id="@+id/test_sale"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textColor="@drawable/navigation_bar_color"
+            android:drawableTop="@drawable/selector_navigation_sale"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="@string/text_sale"
+            android:textAlignment="center"/>
+
+        <RadioButton
+            android:id="@+id/test_red_pack"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textColor="@drawable/navigation_bar_color"
+            android:drawableTop="@drawable/selector_navigation_red_pack"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="@string/text_red_pack"
+            android:textAlignment="center"/>
+
+        <RadioButton
+            android:id="@+id/test_search"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textColor="@drawable/navigation_bar_color"
+            android:drawableTop="@drawable/selector_navigation_search"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="@string/text_search"
+            android:textAlignment="center"/>
+
+    </RadioGroup>
+</RelativeLayout>

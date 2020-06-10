@@ -20,6 +20,7 @@ import com.reiinoki.taobaounion.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,18 +33,26 @@ public class MainActivity extends AppCompatActivity {
     private SaleFragment mSaleFragment;
     private SearchFragment mSearchFragment;
     private FragmentManager mFm;
+    private Unbinder mBind;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        mBind = ButterKnife.bind(this);
 //        initView();
         initFragment();
         initListener();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBind != null) {
+            mBind.unbind();
+        }
+    }
 
     private void initFragment() {
         mHomeFragment = new HomeFragment();
@@ -61,19 +70,19 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "title -> " + item.getTitle());
                 switch (item.getItemId()) {
                     case R.id.home:
-                        LogUtils.debug(MainActivity.class, "now home");
+                        LogUtils.debug(this, "now home");
                         switchFragment(mHomeFragment);
                         break;
                     case R.id.sale:
-                        LogUtils.debug(MainActivity.class, "now sale");
+                        LogUtils.debug(this, "now sale");
                         switchFragment(mSaleFragment);
                         break;
                     case R.id.red_pack:
-                        LogUtils.debug(MainActivity.class, "now red pack");
+                        LogUtils.debug(this, "now red pack");
                         switchFragment(mRedPackFragment);
                         break;
                     case R.id.search:
-                        LogUtils.debug(MainActivity.class, "now search");
+                        LogUtils.debug(this, "now search");
                         switchFragment(mSearchFragment);
                         break;
                 }

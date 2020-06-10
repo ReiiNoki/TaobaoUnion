@@ -4,4 +4,9 @@
     <string name="text_sale">Sale</string>
     <string name="text_red_pack">Red Pack</string>
     <string name="text_search">Search</string>
+    <string name="text_search_tips">搜你想搜的宝贝</string>
+    <string name="text_network_error_tips">Network Error, please try again</string>
+    <string name="text_goods_off_price">%1$d RMB off</string>
+    <string name="text_goods_original_price">¥%1$s</string>
+    <string name="text_goods_sell_count">%1$d sold</string>
 </resources>

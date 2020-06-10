@@ -21,6 +21,12 @@ android {
         }
     }
 
+    //To solve error java.lang.BootstrapMethodError: Exception from call site #9 bootstrap method
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
 }
 
 dependencies {
@@ -48,11 +54,11 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     //基础工具库
-    implementation 'com.github.tamsiree.RxTool:RxKit:2.6.2'
+    implementation 'com.github.tamsiree.RxTool:RxKit:v2.4.1'
     //UI库
-    implementation 'com.github.tamsiree.RxTool:RxUI:2.6.2'
+    implementation 'com.github.tamsiree.RxTool:RxUI:v2.4.1'
     //功能库（Zxing扫描与生成二维码条形码）
-    implementation 'com.github.tamsiree.RxTool:RxFeature:2.6.2'
+    implementation 'com.github.tamsiree.RxTool:RxFeature:v2.4.1'
     //ArcGis For Android工具库（API：100.1以上版本）
 
     //noinspection GradleCompatible

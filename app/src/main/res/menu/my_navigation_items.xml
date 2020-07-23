@@ -6,8 +6,8 @@
         android:icon="@mipmap/home_normal"/>
 
     <item
-        android:id="@+id/sale"
-        android:title="@string/text_sale"
+        android:id="@+id/selected"
+        android:title="Selected"
         android:icon="@mipmap/select_normal"/>
 
     <item

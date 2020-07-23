@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:reiinoki="http://schemas.android.com/tools"
+    android:id="@+id/home_pager_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/colorPageBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <androidx.recyclerview.widget.RecyclerView
+   <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+       android:id="@+id/home_pager_refresh"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/home_pager_content_list"/>
+       android:layout_height="match_parent">
+
+      <com.lcodecore.tkrefreshlayout.views.TbNestedScrollView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/home_pager_nested_scroller"
+          android:overScrollMode="never">
+
+         <LinearLayout
+             android:descendantFocusability="blocksDescendants"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:gravity="center"
+             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/home_pager_header_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/dp_125">
+
+                  <LinearLayout
+                      android:id="@+id/looper_point_container"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentBottom="true"
+                      android:layout_marginBottom="@dimen/dp_30"
+                      android:gravity="center"
+                      android:orientation="horizontal"/>
+
+                  <com.reiinoki.taobaounion.ui.custom.AutoLoopViewPager
+                      android:id="@+id/loop_pager"
+                      android:layout_width="match_parent"
+                      android:layout_height="@dimen/dp_200"
+                      android:layout_marginBottom="@dimen/dp_10"
+                      reiinoki:duration="2000"/>
+               </RelativeLayout>
+
+            </LinearLayout>
+
+            <include
+                layout="@layout/include_home_pager_title_part"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/home_pager_content_list"/>
+
+         </LinearLayout>
+
+      </com.lcodecore.tkrefreshlayout.views.TbNestedScrollView>
+   </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+
+
 
 </LinearLayout>

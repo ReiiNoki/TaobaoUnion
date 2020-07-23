@@ -8,6 +8,8 @@
 
     <ImageView
         android:id="@+id/goods_cover"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_5"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_80"
         android:src="@mipmap/ic_launcher"/>

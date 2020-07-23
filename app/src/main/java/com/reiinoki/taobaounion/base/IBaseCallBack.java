@@ -7,4 +7,6 @@ public interface IBaseCallback {
     void onLoading();
     
     void onEmpty();
+
+    void onError();
 }

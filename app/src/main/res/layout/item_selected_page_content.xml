@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/dp_6"
+    app:contentPadding="@dimen/dp_8"
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/selected_cover"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_220"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/selected_off_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_tag_bg"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_5"
+                android:text="领券省30元"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/selected_title"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="石墨烯加热眼罩热敷usb充电发热睡觉遮光睡眠男女护眼缓解眼疲劳热眼罩热敷usb充…"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/selected_buy_btn"
+                android:background="@drawable/shape_tag_bg"
+                android:textColor="@color/white"
+                android:padding="@dimen/dp_2"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Get Coupon"/>
+
+            <TextView
+                android:id="@+id/selected_original_prize"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="9.9 RMB"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

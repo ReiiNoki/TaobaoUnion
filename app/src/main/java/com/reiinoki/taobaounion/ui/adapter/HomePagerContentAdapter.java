@@ -23,7 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerContentAdapter.InnerHolder> {
-    List<HomePagerContent.DataBean> data = new ArrayList<>();
+    List<HomePagerContent.DataBean> mData = new ArrayList<>();
+    private OnListItemClickListener mItemClickListener;
 
     @NonNull
     @Override
@@ -34,20 +35,37 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
 
     @Override
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
-        HomePagerContent.DataBean dataBean = data.get(position);
+
+        HomePagerContent.DataBean dataBean = mData.get(position);
         //set data here
         holder.setData(dataBean);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mItemClickListener != null) {
+                    HomePagerContent.DataBean item = mData.get(position);
+                    mItemClickListener.onItemClick(item);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return mData.size();
     }
 
     public void setData(List<HomePagerContent.DataBean> contents) {
-        data.clear();
-        data.addAll(contents);
+        mData.clear();
+        mData.addAll(contents);
         notifyDataSetChanged();
+    }
+
+    public void addData(List<HomePagerContent.DataBean> contents) {
+        //get old list size
+        int olderSize = mData.size();
+        mData.addAll(contents);
+        notifyItemRangeChanged(olderSize, contents.size());
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder{
@@ -79,7 +97,12 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
             Context context = itemView.getContext();
             title.setText(dataBean.getTitle());
 
-            Glide.with(context).load(UrlUtils.getCoverPath(dataBean.getPict_url())).into(cover);
+            ViewGroup.LayoutParams layoutParams = cover.getLayoutParams();
+            int width = layoutParams.width;
+            int height = layoutParams.height;
+            int coverSize = Math.max(width, height) / 2;
+
+            Glide.with(context).load(UrlUtils.getCoverPath(dataBean.getPict_url(), coverSize)).into(cover);
 
             String finalPrice = dataBean.getZk_final_price();
             long couponAmount = dataBean.getCoupon_amount();
@@ -92,5 +115,13 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
             originalPriceTv.setText(String.format(context.getString(R.string.text_goods_original_price), finalPrice));
             sellCountTv.setText(String.format(context.getString(R.string.text_goods_sell_count), dataBean.getVolume()));
         }
+    }
+
+    public void setOnListItemClickListener(OnListItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+    public interface OnListItemClickListener{
+        void onItemClick(HomePagerContent.DataBean item);
     }
 }

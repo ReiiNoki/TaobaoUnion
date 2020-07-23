@@ -14,11 +14,16 @@ import com.reiinoki.taobaounion.presenter.IHomePresenter;
 import com.reiinoki.taobaounion.presenter.impl.HomePresenterImpl;
 import com.reiinoki.taobaounion.ui.adapter.HomePagerAdapter;
 import com.reiinoki.taobaounion.utils.LogUtils;
+import com.reiinoki.taobaounion.utils.PresenterManager;
 import com.reiinoki.taobaounion.view.IHomeCallback;
 
 import butterknife.BindView;
 
 public class HomeFragment extends BaseFragment implements IHomeCallback {
+    @Override
+    public void onError() {
+
+    }
 
     @BindView(R.id.home_indicator)
     public TabLayout mTabLayout;
@@ -46,7 +51,7 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     @Override
     protected void initPresenter() {
         //create presenter
-        mHomePresenter = new HomePresenterImpl();
+        mHomePresenter = PresenterManager.getInstance().getHomePresenter();
         mHomePresenter.registerViewCallback(this);
     }
 
@@ -72,6 +77,8 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
         LogUtils.debug(this, "onCategoriesLoaded... ");
         //get back the loaded data
         if (mHomePagerAdapter !=null){
+            //per-load limit
+//            homePager.setOffscreenPageLimit(categories.getData().size());
             mHomePagerAdapter.setCategories(categories);
         }
 

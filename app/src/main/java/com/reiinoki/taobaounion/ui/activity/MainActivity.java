@@ -1,28 +1,25 @@
 package com.reiinoki.taobaounion.ui.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.reiinoki.taobaounion.R;
+import com.reiinoki.taobaounion.base.BaseActivity;
 import com.reiinoki.taobaounion.base.BaseFragment;
 import com.reiinoki.taobaounion.ui.fragment.HomeFragment;
 import com.reiinoki.taobaounion.ui.fragment.RedPackFragment;
-import com.reiinoki.taobaounion.ui.fragment.SaleFragment;
+import com.reiinoki.taobaounion.ui.fragment.SelectedFragment;
 import com.reiinoki.taobaounion.ui.fragment.SearchFragment;
 import com.reiinoki.taobaounion.utils.LogUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
@@ -30,34 +27,35 @@ public class MainActivity extends AppCompatActivity {
     public BottomNavigationView bottomNavigationView;
     private HomeFragment mHomeFragment;
     private RedPackFragment mRedPackFragment;
-    private SaleFragment mSaleFragment;
+    private SelectedFragment mSaleFragment;
     private SearchFragment mSearchFragment;
     private FragmentManager mFm;
-    private Unbinder mBind;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mBind = ButterKnife.bind(this);
-//        initView();
-        initFragment();
+    protected void initEvent() {
         initListener();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mBind != null) {
-            mBind.unbind();
-        }
+    protected void initView() {
+        initFragment();
+    }
+
+    @Override
+    protected void initPresenter() {
+
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
     }
 
     private void initFragment() {
         mHomeFragment = new HomeFragment();
         mRedPackFragment = new RedPackFragment();
-        mSaleFragment = new SaleFragment();
+        mSaleFragment = new SelectedFragment();
         mSearchFragment = new SearchFragment();
         mFm = getSupportFragmentManager();
         switchFragment(mHomeFragment);
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         LogUtils.debug(this, "now home");
                         switchFragment(mHomeFragment);
                         break;
-                    case R.id.sale:
+                    case R.id.selected:
                         LogUtils.debug(this, "now sale");
                         switchFragment(mSaleFragment);
                         break;
@@ -91,9 +89,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private BaseFragment lastOneFragment = null;
+
     private void switchFragment(BaseFragment targetFragment) {
         FragmentTransaction transaction = mFm.beginTransaction();
-        transaction.replace(R.id.main_page_container, targetFragment);
+        if (!targetFragment.isAdded()) {
+            transaction.add(R.id.main_page_container, targetFragment);
+        } else {
+            if (lastOneFragment != null) {
+                transaction.hide(lastOneFragment);
+            }
+            transaction.show(targetFragment);
+        }
+        lastOneFragment = targetFragment;
         transaction.commit();
     }
 

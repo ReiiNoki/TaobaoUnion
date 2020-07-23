@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/ticket_back_press"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="14sp"
+            android:text="@string/text_tao_kou_ling"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_300">
+
+        <ImageView
+            android:id="@+id/ticket_cover"
+            android:layout_width="@dimen/dp_300"
+            android:layout_height="@dimen/dp_300"
+            android:background="@color/colorGrey"/>
+
+        <com.reiinoki.taobaounion.ui.custom.LoadingView
+            android:id="@+id/ticket_cover_loading"
+            android:layout_height="@dimen/dp_33"
+            android:layout_width="@dimen/dp_33"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/ticket_load_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="14sp"
+            android:text="Loading error, please try again"
+            android:visibility="gone"/>
+
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/ticket_code"
+        android:layout_width="@dimen/dp_224"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="@drawable/shape_ticket_code_box_bg"
+        android:focusable="false"
+        android:gravity="center"
+        android:textColor="#4A4A4A" />
+
+    <TextView
+        android:id="@+id/ticket_copy_or_open_button"
+        android:layout_width="@dimen/dp_141"
+        android:layout_height="@dimen/dp_40"
+        android:text="@string/text_ling_quan"
+        android:gravity="center"
+        android:background="@drawable/shape_button"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/dp_30"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

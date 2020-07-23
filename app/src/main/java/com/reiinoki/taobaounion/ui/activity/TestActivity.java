@@ -2,7 +2,9 @@ package com.reiinoki.taobaounion.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -24,6 +26,10 @@ public class TestActivity extends Activity {
 
         ButterKnife.bind(this);
         initListener();
+    }
+
+    public void showToast(View view) {
+        Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
     }
 
     private void initListener() {

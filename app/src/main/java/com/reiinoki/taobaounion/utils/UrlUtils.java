@@ -18,7 +18,7 @@ public class UrlUtils {
         }
     }
 
-    public static String getTickeetUrl(String url) {
+    public static String getTicketUrl(String url) {
         if (url.startsWith("http") || url.startsWith("https")) {
             return url;
         } else {
@@ -28,5 +28,9 @@ public class UrlUtils {
 
     public static String getSelectedPageContentUrl(int favorites_id) {
         return "recommend/" + favorites_id;
+    }
+
+    public static String getOnSellPageUrl(int currentPage) {
+        return "onSell/" + currentPage;
     }
 }

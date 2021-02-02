@@ -2,6 +2,9 @@ package com.reiinoki.taobaounion.model;
 
 import com.reiinoki.taobaounion.model.domain.Categories;
 import com.reiinoki.taobaounion.model.domain.HomePagerContent;
+import com.reiinoki.taobaounion.model.domain.OnSellContent;
+import com.reiinoki.taobaounion.model.domain.SearchRecommend;
+import com.reiinoki.taobaounion.model.domain.SearchResult;
 import com.reiinoki.taobaounion.model.domain.SelectedContent;
 import com.reiinoki.taobaounion.model.domain.SelectedPageCategory;
 import com.reiinoki.taobaounion.model.domain.TicketParams;
@@ -30,4 +33,13 @@ public interface Api {
 
     @GET()
     Call<SelectedContent> getSelectedContent(@Url String url);
+
+    @GET()
+    Call<OnSellContent> getOnSellContent(@Url String url);
+
+    @GET("search/recommend")
+    Call<SearchRecommend> getRecommendWords();
+
+    @GET("search")
+    Call<SearchResult> doSearch(@Query("page") int page, @Query("keyword") String keyword);
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AutoLoopStyle">
+        <attr name="duration" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextFlowLayoutStyle">
+        <attr name="horizontalSpace" format="dimension"/>
+        <attr name="verticalSpace" format="dimension"/>
+    </declare-styleable>
+</resources>

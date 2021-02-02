@@ -1,6 +1,5 @@
 package com.reiinoki.taobaounion.ui.adapter;
 
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,7 @@ import com.reiinoki.taobaounion.R;
 import com.reiinoki.taobaounion.model.domain.SelectedContent;
 import com.reiinoki.taobaounion.utils.Constants;
 import com.reiinoki.taobaounion.utils.LogUtils;
+import com.reiinoki.taobaounion.utils.UrlUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPageContentAdapter.InnerHolder> {
 
-    private List<SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean> mData = new ArrayList<>();
+    private List<SelectedContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean> mData = new ArrayList<>();
     private OnSelectedPageContentItemClickListener mContentItemClickListener = null;
 
     @NonNull
@@ -38,7 +38,7 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
 
     @Override
     public void onBindViewHolder(@NonNull SelectedPageContentAdapter.InnerHolder holder, int position) {
-        SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean itemData = mData.get(position);
+        SelectedContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean itemData = mData.get(position);
         holder.setData(itemData);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,12 +56,16 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
     }
 
     public void setData(SelectedContent content) {
-        LogUtils.debug(this, "right adapter set data - code" + content.getCode());
+        LogUtils.debug(this, "right adapter set data - code " + content.getCode());
         if (content.getCode() == Constants.SUCCESS_CODE) {
-            List<SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean> uatmTbkItem = content.getData().getTbk_uatm_favorites_item_get_response().getResults().getUatm_tbk_item();
-            this.mData.clear();
-            this.mData.addAll(uatmTbkItem);
-            notifyDataSetChanged();
+            try {
+                List<SelectedContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean> uatmTbkItem = content.getData().getTbk_dg_optimus_material_response().getResult_list().getMap_data();
+                this.mData.clear();
+                this.mData.addAll(uatmTbkItem);
+                notifyDataSetChanged();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -79,9 +83,8 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
         @BindView(R.id.selected_buy_btn)
         public TextView buyBtn;
 
-        @BindView(R.id.selected_original_prize)
-        public TextView originalPrizeTv;
-
+        @BindView(R.id.selected_original_price)
+        public TextView originalPriceTv;
 
 
         public InnerHolder(@NonNull View itemView) {
@@ -89,15 +92,15 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean itemData) {
+        public void setData(SelectedContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean itemData) {
             title.setText(itemData.getTitle());
-            String pict_url = itemData.getPict_url();
+            String pict_url = UrlUtils.getCoverPath(itemData.getPict_url());
             Glide.with(itemView.getContext()).load(pict_url).into(cover);
             if (TextUtils.isEmpty(itemData.getCoupon_click_url())) {
-                originalPrizeTv.setText("没有优惠券了！！！");
+                originalPriceTv.setText("没有优惠券了！！！");
                 buyBtn.setVisibility(View.GONE);
             } else {
-                originalPrizeTv.setText("原价：" + itemData.getZk_final_price());
+                originalPriceTv.setText("原价：" + itemData.getZk_final_price());
             }
 
             if (TextUtils.isEmpty(itemData.getCoupon_info())) {
@@ -116,6 +119,6 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
     }
 
     public interface OnSelectedPageContentItemClickListener {
-        void onContentItemClick(SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean item);
+        void onContentItemClick(SelectedContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean item);
     }
 }

@@ -137,6 +137,10 @@ public class TicketActivity extends BaseActivity implements ITicketPagerCallback
             Glide.with(this).load(coverPath).into(mCover);
         }
 
+        if (TextUtils.isEmpty(cover)) {
+            mCover.setImageResource(R.mipmap.ic_launcher);
+        }
+
         if (result != null && result.getData().getTbk_tpwd_create_response() != null) {
             mTicketCode.setText(result.getData().getTbk_tpwd_create_response().getData().getModel());
         }

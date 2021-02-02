@@ -4,7 +4,9 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:background="@color/white"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/dp_5"
+    android:paddingBottom="@dimen/dp_5">
 
     <ImageView
         android:id="@+id/goods_cover"

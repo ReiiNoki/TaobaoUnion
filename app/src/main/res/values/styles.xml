@@ -8,7 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <declare-styleable name="AutoLoopStyle">
-        <attr name="duration" format="integer"/>
-    </declare-styleable>
 </resources>

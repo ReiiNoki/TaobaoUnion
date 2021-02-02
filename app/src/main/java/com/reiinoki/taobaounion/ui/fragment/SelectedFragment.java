@@ -3,7 +3,10 @@ package com.reiinoki.taobaounion.ui.fragment;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,10 +35,15 @@ public class SelectedFragment extends BaseFragment implements ISelectedPageCallb
     @BindView(R.id.right_content_list)
     public RecyclerView rightContentList;
 
+    @BindView(R.id.fragment_bar_title_tv)
+    public TextView barTitleTv;
+
     private SelectedPageLeftAdapter mLeftAdapter;
     private SelectedPageContentAdapter mRightAdapter;
 
     private ISelectedPagePresenter mSelectedPagePresenter;
+
+
 
     @Override
     protected void initPresenter() {
@@ -54,12 +62,20 @@ public class SelectedFragment extends BaseFragment implements ISelectedPageCallb
     }
 
     @Override
+    protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.base_fragment_layout_with_bar, container, false);
+    }
+
+    @Override
     protected int getRootViewId() {
         return R.layout.fragment_selected;
     }
 
     protected void initView(View rootView) {
         setupState(State.SUCCESS);
+
+        barTitleTv.setText("精选宝贝");
+
         leftCategoryList.setLayoutManager(new LinearLayoutManager(getContext()));
         mLeftAdapter = new SelectedPageLeftAdapter();
         leftCategoryList.setAdapter(mLeftAdapter);
@@ -137,7 +153,7 @@ public class SelectedFragment extends BaseFragment implements ISelectedPageCallb
     }
 
     @Override
-    public void onContentItemClick(SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean item) {
+    public void onContentItemClick(SelectedContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean item) {
         String title = item.getTitle();
         String url = item.getCoupon_click_url();
         if (TextUtils.isEmpty(url)) {

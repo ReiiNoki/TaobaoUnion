@@ -9,7 +9,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.reiinoki.taobaounion.R;
+import com.reiinoki.taobaounion.ui.custom.TextFlowLayout;
 import com.reiinoki.taobaounion.utils.LogUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,13 +23,55 @@ public class TestActivity extends Activity {
     @BindView(R.id.test_navigation_bar)
     public RadioGroup navigationBar;
 
+    @BindView(R.id.test_flow_layout)
+    public TextFlowLayout mTextFlowLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_text);
+        setContentView(R.layout.activity_test);
 
         ButterKnife.bind(this);
         initListener();
+
+        List<String> testList = new ArrayList<>();
+
+        testList.add("电脑");
+        testList.add("电脑显示器");
+        testList.add("Nuxt.js");
+        testList.add("Vue.js课程");
+        testList.add("机械键盘");
+        testList.add("滑板鞋");
+        testList.add("运动鞋");
+        testList.add("肥宅快乐水");
+        testList.add("阳光沙滩");
+        testList.add("android编程");
+        testList.add("机械键盘");
+        testList.add("滑板鞋");
+        testList.add("运动鞋");
+        testList.add("肥宅快乐水");
+        testList.add("阳光沙滩");
+        testList.add("android编程");
+        testList.add("机械键盘");
+        testList.add("滑板鞋");
+        testList.add("肥宅快乐水");
+        testList.add("阳光沙滩");
+        testList.add("android编程");
+        testList.add("机械键盘");
+        testList.add("滑板鞋");
+        testList.add("运动鞋");
+        testList.add("肥宅快乐水");
+        testList.add("阳光沙滩");
+        testList.add("android编程");
+        testList.add("JavaWeb后台");
+
+        mTextFlowLayout.setTextList(testList);
+        mTextFlowLayout.setOnFlowTextItemClickListener(new TextFlowLayout.OnFlowTextItemClickListener() {
+            @Override
+            public void onFlowItemClick(String text) {
+                LogUtils.debug(TestActivity.this, "click text: " + text);
+            }
+        });
     }
 
     public void showToast(View view) {

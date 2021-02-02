@@ -22,11 +22,13 @@ import com.reiinoki.taobaounion.R;
 import com.reiinoki.taobaounion.base.BaseFragment;
 import com.reiinoki.taobaounion.model.domain.Categories;
 import com.reiinoki.taobaounion.model.domain.HomePagerContent;
+import com.reiinoki.taobaounion.model.domain.IBaseInfo;
+import com.reiinoki.taobaounion.model.domain.ILinearItemInfo;
 import com.reiinoki.taobaounion.presenter.ICategoryPagerPresenter;
 import com.reiinoki.taobaounion.presenter.ITicketPresenter;
 import com.reiinoki.taobaounion.presenter.impl.TicketPresenterImpl;
 import com.reiinoki.taobaounion.ui.activity.TicketActivity;
-import com.reiinoki.taobaounion.ui.adapter.HomePagerContentAdapter;
+import com.reiinoki.taobaounion.ui.adapter.LinearItemContentAdapter;
 import com.reiinoki.taobaounion.ui.adapter.LooperPagerAdapter;
 import com.lcodecore.tkrefreshlayout.views.TbNestedScrollView;
 import com.reiinoki.taobaounion.ui.custom.AutoLoopViewPager;
@@ -41,11 +43,11 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback, HomePagerContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPageItemClickListener {
+public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback, LinearItemContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPageItemClickListener {
 
     private ICategoryPagerPresenter mCategoryPagePresenter;
     private int mMaterialId;
-    private HomePagerContentAdapter mContentAdapter;
+    private LinearItemContentAdapter mContentAdapter;
     private LooperPagerAdapter mLooperPagerAdapter;
 
     public static HomePagerFragment newInstance(Categories.DataBean category) {
@@ -184,7 +186,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
             }
         });
         //start adapter
-        mContentAdapter = new HomePagerContentAdapter();
+        mContentAdapter = new LinearItemContentAdapter();
         //setup adapter
         mContentList.setAdapter(mContentAdapter);
         //pager adapter
@@ -272,7 +274,6 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         ToastUtil.showToast(contents.size() + "records loaded");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLooperListLoaded(List<HomePagerContent.DataBean> contents) {
         mLooperPagerAdapter.setData(contents);
@@ -314,19 +315,15 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         return mMaterialId;
     }
 
-    @Override
-    public void onItemClick(HomePagerContent.DataBean item) {
+    public void onItemClick(IBaseInfo item) {
         LogUtils.debug(this, "item onclick");
         handleItemCLick(item);
     }
 
-    private void handleItemCLick(HomePagerContent.DataBean item) {
+    private void handleItemCLick(IBaseInfo item) {
         String title = item.getTitle();
-        String url = item.getCoupon_click_url();
-        if (TextUtils.isEmpty(url)) {
-            url = item.getClick_url();
-        }
-        String cover = item.getPict_url();
+        String url = item.getUrl();
+        String cover = item.getCover();
         //oad data using TicketPresenter
         ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
         ticketPresenter.getTicket(title, url, cover);
@@ -334,7 +331,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     }
 
     @Override
-    public void onLooperItemClick(HomePagerContent.DataBean item) {
+    public void onLooperItemClick(IBaseInfo item) {
         handleItemCLick(item);
     }
 }

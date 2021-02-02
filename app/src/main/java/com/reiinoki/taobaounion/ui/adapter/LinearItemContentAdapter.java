@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.reiinoki.taobaounion.R;
 import com.reiinoki.taobaounion.model.domain.HomePagerContent;
+import com.reiinoki.taobaounion.model.domain.IBaseInfo;
+import com.reiinoki.taobaounion.model.domain.ILinearItemInfo;
 import com.reiinoki.taobaounion.utils.UrlUtils;
 
 import java.util.ArrayList;
@@ -22,29 +24,27 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerContentAdapter.InnerHolder> {
-    List<HomePagerContent.DataBean> mData = new ArrayList<>();
+public class LinearItemContentAdapter extends RecyclerView.Adapter<LinearItemContentAdapter.InnerHolder> {
+    List<ILinearItemInfo> mData = new ArrayList<>();
     private OnListItemClickListener mItemClickListener;
 
     @NonNull
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_pager_content, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_linear_goods_content, parent, false);
         return new InnerHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
-
-        HomePagerContent.DataBean dataBean = mData.get(position);
+        ILinearItemInfo dataBean = mData.get(position);
         //set data here
         holder.setData(dataBean);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mItemClickListener != null) {
-                    HomePagerContent.DataBean item = mData.get(position);
-                    mItemClickListener.onItemClick(item);
+                    mItemClickListener.onItemClick(dataBean);
                 }
             }
         });
@@ -55,13 +55,13 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
         return mData.size();
     }
 
-    public void setData(List<HomePagerContent.DataBean> contents) {
+    public void setData(List<? extends ILinearItemInfo> contents) {
         mData.clear();
         mData.addAll(contents);
         notifyDataSetChanged();
     }
 
-    public void addData(List<HomePagerContent.DataBean> contents) {
+    public void addData(List<? extends ILinearItemInfo> contents) {
         //get old list size
         int olderSize = mData.size();
         mData.addAll(contents);
@@ -93,19 +93,20 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(HomePagerContent.DataBean dataBean) {
+        public void setData(ILinearItemInfo dataBean) {
             Context context = itemView.getContext();
             title.setText(dataBean.getTitle());
 
-            ViewGroup.LayoutParams layoutParams = cover.getLayoutParams();
-            int width = layoutParams.width;
-            int height = layoutParams.height;
-            int coverSize = Math.max(width, height) / 2;
+//            ViewGroup.LayoutParams layoutParams = cover.getLayoutParams();
+//            int width = layoutParams.width;
+//            int height = layoutParams.height;
+//            int coverSize = Math.max(width, height) / 2;
 
-            Glide.with(context).load(UrlUtils.getCoverPath(dataBean.getPict_url(), coverSize)).into(cover);
+            String coverPath = UrlUtils.getCoverPath(dataBean.getCover());
+            Glide.with(context).load(coverPath).into(cover);
 
-            String finalPrice = dataBean.getZk_final_price();
-            long couponAmount = dataBean.getCoupon_amount();
+            String finalPrice = dataBean.getFinalPrice();
+            long couponAmount = dataBean.getCouponAmount();
 
             float resultPrice = Float.parseFloat(finalPrice) - couponAmount;
 
@@ -122,6 +123,6 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
     }
 
     public interface OnListItemClickListener{
-        void onItemClick(HomePagerContent.DataBean item);
+        void onItemClick(IBaseInfo item);
     }
 }

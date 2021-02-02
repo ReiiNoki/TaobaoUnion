@@ -1,9 +1,12 @@
 package com.reiinoki.taobaounion.ui.fragment;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -12,10 +15,14 @@ import com.reiinoki.taobaounion.base.BaseFragment;
 import com.reiinoki.taobaounion.model.domain.Categories;
 import com.reiinoki.taobaounion.presenter.IHomePresenter;
 import com.reiinoki.taobaounion.presenter.impl.HomePresenterImpl;
+import com.reiinoki.taobaounion.ui.activity.IMainActivity;
+import com.reiinoki.taobaounion.ui.activity.MainActivity;
+import com.reiinoki.taobaounion.ui.activity.ScanQrCodeActivity;
 import com.reiinoki.taobaounion.ui.adapter.HomePagerAdapter;
 import com.reiinoki.taobaounion.utils.LogUtils;
 import com.reiinoki.taobaounion.utils.PresenterManager;
 import com.reiinoki.taobaounion.view.IHomeCallback;
+import com.vondear.rxfeature.activity.ActivityScanerCode;
 
 import butterknife.BindView;
 
@@ -25,6 +32,9 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
 
     }
 
+    @BindView(R.id.scan_icon)
+    public ImageView scanBtn;
+
     @BindView(R.id.home_indicator)
     public TabLayout mTabLayout;
 
@@ -32,6 +42,10 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
 
     @BindView(R.id.home_pager)
     public ViewPager homePager;
+
+    @BindView(R.id.home_search_input_box)
+    public View mSearchInputBox;
+
     private HomePagerAdapter mHomePagerAdapter;
 
     @Override
@@ -47,12 +61,31 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
         homePager.setAdapter(mHomePagerAdapter);
     }
 
+    @Override
+    protected void initListener() {
+        scanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ScanQrCodeActivity.class));
+            }
+        });
+    }
 
     @Override
     protected void initPresenter() {
         //create presenter
         mHomePresenter = PresenterManager.getInstance().getHomePresenter();
         mHomePresenter.registerViewCallback(this);
+        mSearchInputBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity activity = getActivity();
+                if (activity instanceof IMainActivity) {
+                    ((IMainActivity) activity).switch2Search();
+                }
+
+            }
+        });
     }
 
     @Override
@@ -63,17 +96,12 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     @Override
     protected void loadData() {
         //load data
-        setupState(State.LOADING);
         mHomePresenter.getCategories();
     }
 
     @Override
     public void onCategoriesLoaded(Categories categories) {
-        if (categories == null || categories.getData().size() == 0) {
-            setupState(State.EMPTY);
-        } else {
-            setupState(State.SUCCESS);
-        }
+        setupState(State.SUCCESS);
         LogUtils.debug(this, "onCategoriesLoaded... ");
         //get back the loaded data
         if (mHomePagerAdapter !=null){

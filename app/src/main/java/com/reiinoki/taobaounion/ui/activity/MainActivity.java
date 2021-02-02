@@ -12,21 +12,21 @@ import com.reiinoki.taobaounion.R;
 import com.reiinoki.taobaounion.base.BaseActivity;
 import com.reiinoki.taobaounion.base.BaseFragment;
 import com.reiinoki.taobaounion.ui.fragment.HomeFragment;
-import com.reiinoki.taobaounion.ui.fragment.RedPackFragment;
+import com.reiinoki.taobaounion.ui.fragment.OnSellFragment;
 import com.reiinoki.taobaounion.ui.fragment.SelectedFragment;
 import com.reiinoki.taobaounion.ui.fragment.SearchFragment;
 import com.reiinoki.taobaounion.utils.LogUtils;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements IMainActivity{
 
     private static final String TAG = "MainActivity";
 
     @BindView(R.id.main_navigation_bar)
-    public BottomNavigationView bottomNavigationView;
+    public BottomNavigationView mNavigationView;
     private HomeFragment mHomeFragment;
-    private RedPackFragment mRedPackFragment;
+    private OnSellFragment mRedPackFragment;
     private SelectedFragment mSaleFragment;
     private SearchFragment mSearchFragment;
     private FragmentManager mFm;
@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragment() {
         mHomeFragment = new HomeFragment();
-        mRedPackFragment = new RedPackFragment();
+        mRedPackFragment = new OnSellFragment();
         mSaleFragment = new SelectedFragment();
         mSearchFragment = new SearchFragment();
         mFm = getSupportFragmentManager();
@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initListener() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d(TAG, "title -> " + item.getTitle());
@@ -92,17 +92,28 @@ public class MainActivity extends BaseActivity {
     private BaseFragment lastOneFragment = null;
 
     private void switchFragment(BaseFragment targetFragment) {
+
+        if(lastOneFragment == targetFragment) {
+            return;
+        }
+
         FragmentTransaction transaction = mFm.beginTransaction();
         if (!targetFragment.isAdded()) {
             transaction.add(R.id.main_page_container, targetFragment);
         } else {
-            if (lastOneFragment != null) {
-                transaction.hide(lastOneFragment);
-            }
             transaction.show(targetFragment);
+        }
+        if (lastOneFragment != null) {
+            transaction.hide(lastOneFragment);
         }
         lastOneFragment = targetFragment;
         transaction.commit();
+    }
+
+    @Override
+    public void switch2Search() {
+        //switch to search fragment icon
+        mNavigationView.setSelectedItemId(R.id.search);
     }
 
 

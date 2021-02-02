@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".ui.activity.TicketActivity"
             android:launchMode="singleTop">
+        </activity>
+        <activity android:name=".ui.activity.ScanQrCodeActivity">
 
         </activity>
     </application>

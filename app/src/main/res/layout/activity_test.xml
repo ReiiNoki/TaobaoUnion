@@ -14,7 +14,15 @@
         android:layout_height="wrap_content"
         android:onClick="showTost"
         android:text="test tost"
+        android:id="@+id/test_tost_button"
         android:textAllCaps="false"/>
+
+    <com.reiinoki.taobaounion.ui.custom.TextFlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/test_tost_button"
+        android:id="@+id/test_flow_layout"/>
+
 
     <RadioGroup
         android:id="@+id/test_navigation_bar"

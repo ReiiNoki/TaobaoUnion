@@ -45,6 +45,7 @@
         <TextView
             android:id="@+id/selected_title"
             android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -66,7 +67,7 @@
                 android:text="Get Coupon"/>
 
             <TextView
-                android:id="@+id/selected_original_prize"
+                android:id="@+id/selected_original_price"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

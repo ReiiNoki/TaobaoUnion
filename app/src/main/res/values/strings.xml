@@ -14,4 +14,6 @@
     <string name="text_ling_quan">领券</string>
     <string name="text_loading">Loading</string>
     <string name="text_selected_title">精选宝贝</string>
+    <string name="text_on_sell_title">特惠宝贝</string>
+    <string name="search_history">Search History</string>
 </resources>

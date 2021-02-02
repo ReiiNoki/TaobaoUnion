@@ -1,12 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorEFEEEE">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- search history -->
+    <LinearLayout
+        android:id="@+id/search_history_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search"
-        android:layout_gravity="center"/>
+        android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_history"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:id="@+id/delete_search_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/delete_icon"/>
+        </RelativeLayout>
+
+        <com.reiinoki.taobaounion.ui.custom.TextFlowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:horizontalSpace="10dp"
+            app:verticalSpace="@dimen/dp_10"
+            android:id="@+id/search_history_view"/>
+
+    </LinearLayout>
+<!--     keyword for search -->
+    <LinearLayout
+        android:id="@+id/search_recommend_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recommend"
+                android:textSize="14sp"/>
+
+        </RelativeLayout>
+
+        <com.reiinoki.taobaounion.ui.custom.TextFlowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:horizontalSpace="10dp"
+            app:verticalSpace="@dimen/dp_10"
+            android:id="@+id/search_recommend_view"/>
+
+    </LinearLayout>
+    <!-- result -->
+
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:id="@+id/search_result_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:overScrollMode="never"
+            android:id="@+id/search_result_list"
+            android:layout_height="match_parent"/>
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 </LinearLayout>

@@ -59,7 +59,7 @@ public class HomePagerContent {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements ILinearItemInfo {
 
         @Override
         public String toString() {
@@ -356,6 +356,27 @@ public class HomePagerContent {
         public void setZk_final_price(String zk_final_price) {
             this.zk_final_price = zk_final_price;
         }
+
+        @Override
+        public String getFinalPrice() {
+            return zk_final_price;
+        }
+
+        @Override
+        public long getCouponAmount() {
+            return coupon_amount;
+        }
+
+        @Override
+        public String getCover() {
+            return pict_url;
+        }
+
+        @Override
+        public String getUrl() {
+            return coupon_click_url;
+        }
+
 
         public static class SmallImagesBean {
             private List<String> string;
